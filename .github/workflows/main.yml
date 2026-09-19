@@ -38,23 +38,29 @@ jobs:
           echo "Dự án Flutter nằm tại: $TARGET_DIR"
           cd "$TARGET_DIR"
 
-          # 2. Xác định đường dẫn Flutter SDK trên GitHub Runner
+          # 2. Xác định đường dẫn Flutter SDK trên máy ảo GitHub Actions
           FLUTTER_ROOT="$(dirname "$(dirname "$(which flutter)")")"
           echo "Đường dẫn Flutter SDK: $FLUTTER_ROOT"
 
-          # 3. Tạo file local.properties cho thư mục android/
+          # 3. Tạo file local.properties cho cả android/ và .android/
           mkdir -p android
           cat > android/local.properties <<EOF
           sdk.dir=$ANDROID_HOME
           flutter.sdk=$FLUTTER_ROOT
           EOF
 
-          # 4. Tạo dự phòng cho thư mục .android/ (nếu là Flutter Module chuẩn)
           mkdir -p .android
           cat > .android/local.properties <<EOF
           sdk.dir=$ANDROID_HOME
           flutter.sdk=$FLUTTER_ROOT
           EOF
+
+          # 4. TỰ ĐỘNG CẬP NHẬT GRADLE LÊN 8.14.0
+          echo "=== Cập nhật Gradle Wrapper lên 8.14.0 ==="
+          find . -name "gradle-wrapper.properties" -exec sed -i 's/gradle-[0-9.]*-\(all\|bin\)\.zip/gradle-8.14.0-\1.zip/g' {} +
+          
+          # In ra kiểm tra xem giá trị mới đã được ghi hay chưa
+          find . -name "gradle-wrapper.properties" -exec grep "distributionUrl" {} +
 
           # 5. Tải dependency và build AAR
           flutter pub get
