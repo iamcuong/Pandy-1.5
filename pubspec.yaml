@@ -1,0 +1,49 @@
+name: hoc_tieng_trung
+description: Ứng dụng học tiếng Trung cho người Việt — offline hoàn toàn.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: '>=3.27.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2
+  sqflite: ^2.3.3
+  path: ^1.9.0
+  path_drawing: ^1.0.1
+  flutter_tts: ^4.2.0
+  pdf: ^3.11.1
+  flutter_local_notifications: ^17.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/db/hanzi_ref.db
+    - assets/fonts/NotoSansSC-Report.ttf
+    - assets/fonts/PublicSans-Regular.ttf
+    - assets/fonts/PublicSans-Bold.ttf
+    - assets/fonts/PublicSans-Italic.ttf
+    - assets/vocab_images/
+    - assets/radical_images/
+  fonts:
+    - family: PublicSans
+      fonts:
+        - asset: assets/fonts/PublicSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PublicSans-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/PublicSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/PublicSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PublicSans-Bold.ttf
+          weight: 700

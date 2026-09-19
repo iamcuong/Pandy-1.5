@@ -1,0 +1,429 @@
+[
+ {
+  "id": 1,
+  "char": "寺",
+  "pinyin": "sì",
+  "hanViet": "TỰ",
+  "meaning": "chùa, nhà thờ",
+  "hsk": 6,
+  "mnemonic": "Đất (土) thốn (寸) không được xây chùa (寺)",
+  "giaiThich": "“寺” ban đầu chỉ cơ quan hành chính thời cổ, về sau thường dùng để chỉ chùa chiền, đền thờ Phật giáo.",
+  "image": null,
+  "components": [
+   "土",
+   "寸"
+  ],
+  "related": [
+   {
+    "char": "少林寺",
+    "traditional": null,
+    "pinyin": "shàolínsì",
+    "hanViet": "THIẾU LÂM TỰ",
+    "meaning": "Chùa Thiếu Lâm"
+   },
+   {
+    "char": "寺庙",
+    "traditional": "寺廟",
+    "pinyin": "sìmiào",
+    "hanViet": "TỰ MIẾU",
+    "meaning": "Đền miếu, chùa chiền"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "char": "等",
+  "pinyin": "děng",
+  "hanViet": "ĐẲNG",
+  "meaning": "đợi, chờ, bình đẳng, cấp, hạng",
+  "hsk": 1,
+  "mnemonic": "Đợi chờ (等) trúc (⺮) lên chùa (寺)",
+  "giaiThich": "“等” mang nghĩa chờ đợi, và mở rộng sang nghĩa cấp bậc, hạng mục khi ghép với các từ khác.",
+  "image": null,
+  "components": [
+   "⺮",
+   "寺"
+  ],
+  "related": [
+   {
+    "char": "平等",
+    "traditional": null,
+    "pinyin": "píngděng",
+    "hanViet": "BÌNH ĐẲNG",
+    "meaning": "Bình đẳng"
+   },
+   {
+    "char": "等级",
+    "traditional": "等級",
+    "pinyin": "děngjí",
+    "hanViet": "ĐẲNG CẤP",
+    "meaning": "Đẳng cấp, cấp bậc"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "char": "特",
+  "pinyin": "tè",
+  "hanViet": "ĐẶC",
+  "meaning": "đặc biệt",
+  "hsk": 2,
+  "mnemonic": "Trâu bò (牛) sống trên chùa (寺) rất đặc biệt (特)",
+  "giaiThich": "“特” diễn tả điều gì đó khác biệt, nổi bật, thường dùng làm phó từ nhấn mạnh “rất, đặc biệt”.",
+  "image": null,
+  "components": [
+   "牛",
+   "寺"
+  ],
+  "related": [
+   {
+    "char": "特别",
+    "traditional": "特別",
+    "pinyin": "tèbié",
+    "hanViet": "ĐẶC BIỆT",
+    "meaning": "Đặc biệt, vô cùng"
+   },
+   {
+    "char": "特点",
+    "traditional": "特點",
+    "pinyin": "tèdiǎn",
+    "hanViet": "ĐẶC ĐIỂM",
+    "meaning": "Đặc điểm"
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "char": "持",
+  "pinyin": "chí",
+  "hanViet": "TRÌ",
+  "meaning": "cầm, nắm, giữ, duy trì",
+  "hsk": 3,
+  "mnemonic": "Tay (扌) lên chùa (寺) cầm (持) theo lễ vật",
+  "giaiThich": "“持” gắn với hành động cầm, nắm bằng tay, và mở rộng sang nghĩa duy trì, giữ vững.",
+  "image": null,
+  "components": [
+   "扌",
+   "寺"
+  ],
+  "related": [
+   {
+    "char": "主持",
+    "traditional": null,
+    "pinyin": "zhǔchí",
+    "hanViet": "CHỦ TRÌ",
+    "meaning": "Chủ trì, MC"
+   },
+   {
+    "char": "保持",
+    "traditional": null,
+    "pinyin": "bǎochí",
+    "hanViet": "BẢO TRÌ",
+    "meaning": "Gìn giữ, duy trì"
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "char": "一",
+  "pinyin": "yī",
+  "hanViet": "NHẤT",
+  "meaning": "số 1, nhất, một",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — một nét ngang duy nhất",
+  "giaiThich": "Chữ số đơn giản nhất trong tiếng Trung, chỉ gồm một nét ngang.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "一点儿",
+    "traditional": "一點兒",
+    "pinyin": "yìdiǎnr",
+    "hanViet": "NHẤT ĐIỂM NHI",
+    "meaning": "Một chút, một ít"
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "char": "二",
+  "pinyin": "èr",
+  "hanViet": "NHỊ",
+  "meaning": "số 2",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — hai nét ngang",
+  "giaiThich": "Chữ số 2, gồm hai nét ngang song song.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "第二",
+    "traditional": null,
+    "pinyin": "dì’èr",
+    "hanViet": "ĐỆ NHỊ",
+    "meaning": "Thứ 2, kế tiếp"
+   }
+  ]
+ },
+ {
+  "id": 7,
+  "char": "三",
+  "pinyin": "sān",
+  "hanViet": "TAM",
+  "meaning": "số 3",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — ba nét ngang",
+  "giaiThich": "Chữ số 3, gồm ba nét ngang song song.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "三角",
+    "traditional": null,
+    "pinyin": "sānjiǎo",
+    "hanViet": "TAM GIÁC",
+    "meaning": "Tam giác, ba góc"
+   }
+  ]
+ },
+ {
+  "id": 8,
+  "char": "儿",
+  "pinyin": "ér",
+  "hanViet": "NHÂN, NHI",
+  "meaning": "nhi đồng, đứa trẻ",
+  "hsk": 1,
+  "mnemonic": "Nhi đồng (儿) chân chạy rất nhanh",
+  "giaiThich": "“儿” mô tả hình ảnh chân người, thường dùng để chỉ trẻ nhỏ hoặc làm hậu tố thân mật.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "儿子",
+    "traditional": "兒子",
+    "pinyin": "érzi",
+    "hanViet": "NHI TỬ",
+    "meaning": "Con trai"
+   },
+   {
+    "char": "女儿",
+    "traditional": "女兒",
+    "pinyin": "nǚ’ér",
+    "hanViet": "NỮ NHI",
+    "meaning": "Con gái"
+   }
+  ]
+ },
+ {
+  "id": 9,
+  "char": "从",
+  "pinyin": "cóng",
+  "hanViet": "TÒNG, TÙNG",
+  "meaning": "từ",
+  "hsk": 2,
+  "mnemonic": "Từ (从) nay 2 người (人) là vợ chồng",
+  "giaiThich": "“从” gồm hai chữ Nhân xếp nối tiếp, mang nghĩa đi theo, và dùng làm giới từ “từ”.",
+  "image": null,
+  "components": [
+   "人"
+  ],
+  "related": [
+   {
+    "char": "从小",
+    "traditional": "從小",
+    "pinyin": "cóngxiǎo",
+    "hanViet": "TÒNG TIỂU",
+    "meaning": "Từ nhỏ, từ bé"
+   },
+   {
+    "char": "从来",
+    "traditional": "從來",
+    "pinyin": "cónglái",
+    "hanViet": "TÒNG LAI",
+    "meaning": "Từ trước tới giờ"
+   }
+  ]
+ },
+ {
+  "id": 10,
+  "char": "人",
+  "pinyin": "rén",
+  "hanViet": "NHÂN",
+  "meaning": "người",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — hình người đứng nghiêng, hai chân bước",
+  "giaiThich": "Một trong những chữ tượng hình cổ nhất, mô phỏng hình dáng người đang đi.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "大人",
+    "traditional": null,
+    "pinyin": "dàrén",
+    "hanViet": "ĐẠI NHÂN",
+    "meaning": "Người lớn"
+   },
+   {
+    "char": "女人",
+    "traditional": null,
+    "pinyin": "nǚrén",
+    "hanViet": "NỮ NHÂN",
+    "meaning": "Phụ nữ"
+   }
+  ]
+ },
+ {
+  "id": 11,
+  "char": "大",
+  "pinyin": "dà",
+  "hanViet": "ĐẠI",
+  "meaning": "to, lớn",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — người dang rộng hai tay để chỉ sự to lớn",
+  "giaiThich": "Hình ảnh người đứng dang tay, thể hiện ý nghĩa to lớn, vĩ đại.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "大人",
+    "traditional": null,
+    "pinyin": "dàrén",
+    "hanViet": "ĐẠI NHÂN",
+    "meaning": "Người lớn"
+   },
+   {
+    "char": "大学",
+    "traditional": "大學",
+    "pinyin": "dàxué",
+    "hanViet": "ĐẠI HỌC",
+    "meaning": "Đại học"
+   }
+  ]
+ },
+ {
+  "id": 12,
+  "char": "小",
+  "pinyin": "xiǎo",
+  "hanViet": "TIỂU",
+  "meaning": "nhỏ, bé",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — vật nhỏ được chia tách ra",
+  "giaiThich": "Nét vẽ mô tả vật thể được chia nhỏ, biểu thị ý nghĩa nhỏ bé.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "小孩儿",
+    "traditional": "小孩兒",
+    "pinyin": "xiǎoháir",
+    "hanViet": "TIỂU HÀI NHI",
+    "meaning": "Trẻ em"
+   },
+   {
+    "char": "从小",
+    "traditional": "從小",
+    "pinyin": "cóngxiǎo",
+    "hanViet": "TÒNG TIỂU",
+    "meaning": "Từ nhỏ, từ bé"
+   }
+  ]
+ },
+ {
+  "id": 13,
+  "char": "水",
+  "pinyin": "shuǐ",
+  "hanViet": "THỦY",
+  "meaning": "nước",
+  "hsk": 1,
+  "mnemonic": "Chữ tượng hình — dòng nước chảy giữa hai bờ",
+  "giaiThich": "Mô phỏng hình dạng dòng nước chảy, là một trong những bộ thủ phổ biến nhất.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "水果",
+    "traditional": null,
+    "pinyin": "shuǐguǒ",
+    "hanViet": "THỦY QUẢ",
+    "meaning": "Trái cây"
+   },
+   {
+    "char": "山水",
+    "traditional": null,
+    "pinyin": "shānshuǐ",
+    "hanViet": "SƠN THỦY",
+    "meaning": "Phong cảnh núi nước"
+   }
+  ]
+ },
+ {
+  "id": 14,
+  "char": "火",
+  "pinyin": "huǒ",
+  "hanViet": "HỎA",
+  "meaning": "lửa",
+  "hsk": 2,
+  "mnemonic": "Chữ tượng hình — ngọn lửa bốc cháy với các tia lửa",
+  "giaiThich": "Mô phỏng ngọn lửa đang cháy, thường xuất hiện dưới dạng bộ thủ 灬 khi ghép chữ.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "火山",
+    "traditional": null,
+    "pinyin": "huǒshān",
+    "hanViet": "HỎA SƠN",
+    "meaning": "Núi lửa"
+   }
+  ]
+ },
+ {
+  "id": 15,
+  "char": "木",
+  "pinyin": "mù",
+  "hanViet": "MỘC",
+  "meaning": "cây, gỗ",
+  "hsk": 2,
+  "mnemonic": "Chữ tượng hình — thân cây với rễ và cành",
+  "giaiThich": "Mô phỏng hình dáng một cây với gốc, thân và cành lá.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "木头",
+    "traditional": "木頭",
+    "pinyin": "mùtou",
+    "hanViet": "MỘC ĐẦU",
+    "meaning": "Gỗ, khúc gỗ"
+   }
+  ]
+ },
+ {
+  "id": 16,
+  "char": "山",
+  "pinyin": "shān",
+  "hanViet": "SƠN",
+  "meaning": "núi",
+  "hsk": 2,
+  "mnemonic": "Chữ tượng hình — ba đỉnh núi nhấp nhô",
+  "giaiThich": "Mô phỏng hình dáng ba đỉnh núi liền nhau nhìn từ xa.",
+  "image": null,
+  "components": [],
+  "related": [
+   {
+    "char": "火山",
+    "traditional": null,
+    "pinyin": "huǒshān",
+    "hanViet": "HỎA SƠN",
+    "meaning": "Núi lửa"
+   },
+   {
+    "char": "山水",
+    "traditional": null,
+    "pinyin": "shānshuǐ",
+    "hanViet": "SƠN THỦY",
+    "meaning": "Phong cảnh núi nước"
+   }
+  ]
+ }
+]
