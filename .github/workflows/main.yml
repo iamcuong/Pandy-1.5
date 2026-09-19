@@ -27,17 +27,36 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Locate Project and Build AAR
+      - name: Configure Environment and Build AAR
         run: |
-          # Tự động tìm thư mục chứa pubspec.yaml
-          TARGET_DIR=$(dirname $(find . -maxdepth 3 -name "pubspec.yaml" | head -n 1))
+          # 1. Định vị thư mục chứa dự án Flutter
+          TARGET_DIR=$(dirname "$(find . -maxdepth 3 -name "pubspec.yaml" | head -n 1)")
           if [ -z "$TARGET_DIR" ]; then
             echo "Lỗi: Không tìm thấy file pubspec.yaml trong repository!"
             exit 1
           fi
-          echo "Đã tìm thấy dự án Flutter tại: $TARGET_DIR"
+          echo "Dự án Flutter nằm tại: $TARGET_DIR"
           cd "$TARGET_DIR"
-          
+
+          # 2. Xác định đường dẫn Flutter SDK trên GitHub Runner
+          FLUTTER_ROOT="$(dirname "$(dirname "$(which flutter)")")"
+          echo "Đường dẫn Flutter SDK: $FLUTTER_ROOT"
+
+          # 3. Tạo file local.properties cho thư mục android/
+          mkdir -p android
+          cat > android/local.properties <<EOF
+          sdk.dir=$ANDROID_HOME
+          flutter.sdk=$FLUTTER_ROOT
+          EOF
+
+          # 4. Tạo dự phòng cho thư mục .android/ (nếu là Flutter Module chuẩn)
+          mkdir -p .android
+          cat > .android/local.properties <<EOF
+          sdk.dir=$ANDROID_HOME
+          flutter.sdk=$FLUTTER_ROOT
+          EOF
+
+          # 5. Tải dependency và build AAR
           flutter pub get
           flutter build aar --no-debug --no-profile
 
