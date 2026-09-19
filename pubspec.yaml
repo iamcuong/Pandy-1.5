@@ -25,10 +25,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  module:
-    androidX: true
-    androidPackage: com.pandy.sdk
-    iosBundleIdentifier: com.pandy.sdk
   assets:
     - assets/db/hanzi_ref.db
     - assets/fonts/NotoSansSC-Report.ttf
