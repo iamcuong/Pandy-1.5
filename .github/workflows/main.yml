@@ -1,0 +1,48 @@
+name: Build Flutter SDK (Android AAR)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-aar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Locate Project and Build AAR
+        run: |
+          # Tự động tìm thư mục chứa pubspec.yaml
+          TARGET_DIR=$(dirname $(find . -maxdepth 3 -name "pubspec.yaml" | head -n 1))
+          if [ -z "$TARGET_DIR" ]; then
+            echo "Lỗi: Không tìm thấy file pubspec.yaml trong repository!"
+            exit 1
+          fi
+          echo "Đã tìm thấy dự án Flutter tại: $TARGET_DIR"
+          cd "$TARGET_DIR"
+          
+          flutter pub get
+          flutter build aar --no-debug --no-profile
+
+      - name: Upload AAR Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-aar-release
+          path: '**/build/host/outputs/repo/'
