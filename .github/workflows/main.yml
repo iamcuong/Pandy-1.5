@@ -1,4 +1,4 @@
-name: Build Flutter SDK (Android AAR)
+name: Build APK
 
 on:
   push:
@@ -8,66 +8,53 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-aar:
+  build-apk:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Java JDK
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: stable
           cache: true
 
-      - name: Configure Environment and Build AAR
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # hanzi_ref.db (~28 MB) không có trong repo -> sinh từ tool/data
+      - name: Build reference DB
         run: |
-          # 1. Định vị thư mục chứa dự án Flutter
-          TARGET_DIR=$(dirname "$(find . -maxdepth 3 -name "pubspec.yaml" | head -n 1)")
-          if [ -z "$TARGET_DIR" ]; then
-            echo "Lỗi: Không tìm thấy file pubspec.yaml trong repository!"
-            exit 1
-          fi
-          echo "Dự án Flutter nằm tại: $TARGET_DIR"
-          cd "$TARGET_DIR"
+          mkdir -p assets/db assets/vocab_images
+          python3 tool/build_db.py
 
-          # 2. Xác định đường dẫn Flutter SDK trên máy ảo GitHub Actions
-          FLUTTER_ROOT="$(dirname "$(dirname "$(which flutter)")")"
-          echo "Đường dẫn Flutter SDK: $FLUTTER_ROOT"
+      # Sinh các file Android còn thiếu (res/mipmap, styles, gradle wrapper...) giống setup.sh
+      - name: Generate missing Android files
+        run: |
+          rm -f android/build.gradle android/settings.gradle android/app/build.gradle
+          flutter create --platforms=android --org vn.hoctiengtrung --project-name hoc_tieng_trung .
+          rm -rf android/app/src/main/kotlin/vn/hoctiengtrung/hoc_tieng_trung
+          rm -f test/widget_test.dart
+          grep distributionUrl android/gradle/wrapper/gradle-wrapper.properties
 
-          # 3. Tạo file local.properties cho cả android/ và .android/
-          mkdir -p android
-          cat > android/local.properties <<EOF
-          sdk.dir=$ANDROID_HOME
-          flutter.sdk=$FLUTTER_ROOT
-          EOF
-
-          mkdir -p .android
-          cat > .android/local.properties <<EOF
-          sdk.dir=$ANDROID_HOME
-          flutter.sdk=$FLUTTER_ROOT
-          EOF
-
-          # 4. TỰ ĐỘNG CẬP NHẬT GRADLE LÊN 8.14.0
-          echo "=== Cập nhật Gradle Wrapper lên 8.14.0 ==="
-          find . -name "gradle-wrapper.properties" -exec sed -i 's/gradle-[0-9.]*-\(all\|bin\)\.zip/gradle-8.14.0-\1.zip/g' {} +
-          
-          # In ra kiểm tra xem giá trị mới đã được ghi hay chưa
-          find . -name "gradle-wrapper.properties" -exec grep "distributionUrl" {} +
-
-          # 5. Tải dependency và build AAR
+      - name: Build APK
+        run: |
           flutter pub get
-          flutter build aar --no-debug --no-profile
+          flutter build apk --release
 
-      - name: Upload AAR Artifacts
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-aar-release
-          path: '**/build/host/outputs/repo/'
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
