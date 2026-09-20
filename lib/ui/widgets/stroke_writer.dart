@@ -27,6 +27,15 @@ class StrokeWriterController {
       _s?._startQuiz(onMistake, onCorrectStroke, onComplete);
 
   void cancelQuiz() => _s?._cancelQuizAndShow();
+
+  /// Nháy sáng nét cần viết tiếp theo (chỉ khi đang luyện).
+  void hint() => _s?._hint();
+
+  /// Tổng số nét của chữ hiện tại.
+  int get strokeCount => _s?._paths.length ?? 0;
+
+  /// Số nét đã viết đúng trong lượt luyện hiện tại.
+  int get strokesDone => _s?._quizIndex ?? 0;
 }
 
 /// Vẽ chữ Hán theo dữ liệu nét makemeahanzi, hoạt hoạ thứ tự nét và chấm điểm
@@ -251,6 +260,12 @@ class _StrokeWriterState extends State<StrokeWriter> with TickerProviderStateMix
   }
 
   void _cancelQuizAndShow() => _showAll();
+
+  void _hint() {
+    if (!_quiz || _data == null || _quizIndex >= _paths.length) return;
+    _flashIndex = _quizIndex;
+    _flash.forward(from: 0);
+  }
 
   void _startQuiz(void Function(int)? onMistake, void Function(int)? onCorrect, void Function(int)? onComplete) {
     if (_data == null) return;
