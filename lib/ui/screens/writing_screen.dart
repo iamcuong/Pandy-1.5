@@ -15,12 +15,14 @@ class WritingScreen extends StatefulWidget {
   State<WritingScreen> createState() => _WritingScreenState();
 }
 
+/// Trạng thái khung luyện viết — mỗi trạng thái chỉ có một nút chính.
+enum _Phase { idle, writing, done }
+
 class _WritingScreenState extends State<WritingScreen> {
   final _writer = StrokeWriterController();
   final _search = TextEditingController();
   String? _char;
-  bool _active = false;
-  bool _done = false;
+  _Phase _phase = _Phase.idle;
   int _mistakes = 0;
 
   @override
@@ -31,42 +33,39 @@ class _WritingScreenState extends State<WritingScreen> {
 
   void _resetFor(String ch) {
     _char = ch;
-    _active = false;
-    _done = false;
+    _phase = _Phase.idle;
     _mistakes = 0;
   }
 
+  /// Bắt đầu (hoặc bắt đầu lại) lượt viết: xoá nét cũ, khung trống.
   void _startQuiz(AppState s) {
     if (!_writer.hasData) {
       s.showToast('Chưa có dữ liệu nét viết cho chữ này');
       return;
     }
     setState(() {
-      _active = true;
-      _done = false;
+      _phase = _Phase.writing;
       _mistakes = 0;
     });
     _writer.startQuiz(
-      onMistake: (n) => setState(() => _mistakes = n),
-      onCorrectStroke: (n) => setState(() => _mistakes = n),
+      onMistake: (n) {
+        if (mounted) setState(() => _mistakes = n);
+      },
+      onCorrectStroke: (n) {
+        if (mounted) setState(() => _mistakes = n);
+      },
       onComplete: (n) {
+        if (!mounted) return;
         setState(() {
-          _active = false;
-          _done = true;
+          _phase = _Phase.done;
           _mistakes = n;
         });
-        s.showToast('Hoàn thành luyện viết ${s.writingChar}');
       },
     );
   }
 
-  void _reset() {
-    _writer.cancelQuiz();
-    setState(() {
-      _active = false;
-      _done = false;
-      _mistakes = 0;
-    });
+  void _showModel() {
+    _writer.animate();
   }
 
   Future<void> _openNotebookSheet(AppState s) async {
@@ -89,14 +88,10 @@ class _WritingScreenState extends State<WritingScreen> {
     syncController(_search, s.writingQuery);
     final info = s.writingInfo(s.writingChar);
     final results = s.writingResults;
-    final status = _done
-        ? 'Đã hoàn thành'
-        : (_active ? 'Đang luyện viết...' : 'Nhấn "Luyện viết theo nét" để bắt đầu');
-
     return ListView(
       padding: pagePad,
       // Khoá cuộn khi đang tô nét để thao tác vẽ dọc không làm trang cuộn.
-      physics: _active ? const NeverScrollableScrollPhysics() : null,
+      physics: _phase == _Phase.writing ? const NeverScrollableScrollPhysics() : null,
       children: [
         Row(children: [
           Expanded(
@@ -136,22 +131,12 @@ class _WritingScreenState extends State<WritingScreen> {
         const SizedBox(height: 14),
         AppCard(
           child: Column(children: [
-            Row(children: [
-              Expanded(child: Text(status, style: ts(13, w: w700))),
-              const SizedBox(width: 8),
-              Btn(
-                'Xem mẫu',
-                icon: Icons.play_circle_outline,
-                bg: C.tableHeader,
-                fg: C.primary,
-                fontSize: 11,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                onTap: () {
-                  setState(() => _active = false);
-                  _writer.animate();
-                },
-              ),
-            ]),
+            _StatusLine(
+              phase: _phase,
+              mistakes: _mistakes,
+              done: _writer.strokesDone,
+              total: _writer.strokeCount,
+            ),
             const SizedBox(height: 14),
             LayoutBuilder(
               builder: (_, c) => StrokeWriter(
@@ -162,24 +147,15 @@ class _WritingScreenState extends State<WritingScreen> {
                 drawingColor: C.primary,
                 quizStrokeColor: C.primary,
                 highlightColor: C.amber,
+                onLoaded: (_) {
+                  if (mounted) setState(() {});
+                },
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 14),
+            _actions(s),
+            const SizedBox(height: 10),
             Text('Dữ liệu nét viết chuẩn từ Make Me a Hanzi.', style: ts(10, c: C.ink500)),
-            const SizedBox(height: 12),
-            Row(children: [
-              Expanded(child: Btn.outline('Làm lại', icon: Icons.restart_alt, fg: C.ink700, onTap: _reset)),
-              const SizedBox(width: 10),
-              Expanded(child: Btn('Luyện viết theo nét', bg: C.green, onTap: () => _startQuiz(s))),
-            ]),
-            if (_active) ...[
-              const SizedBox(height: 10),
-              Text('Đang luyện — số lỗi: $_mistakes', style: ts(12, c: C.amberText)),
-            ],
-            if (_done) ...[
-              const SizedBox(height: 10),
-              Text('Hoàn thành! Tổng số lỗi: $_mistakes', style: ts(12, w: w700, c: C.green)),
-            ],
           ]),
         ),
         const SizedBox(height: 12),
@@ -210,6 +186,102 @@ class _WritingScreenState extends State<WritingScreen> {
         ),
       ],
     );
+  }
+}
+
+extension on _WritingScreenState {
+  /// Nút theo trạng thái: luôn chỉ một nút chính (đặc) và tối đa một nút phụ.
+  Widget _actions(AppState s) {
+    const small = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
+    switch (_phase) {
+      case _Phase.idle:
+        return Row(children: [
+          Expanded(
+            flex: 2,
+            child: Btn.outline('Xem mẫu', icon: Icons.play_circle_outline, fontSize: 12, padding: small, onTap: _showModel),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            flex: 3,
+            child: Btn('Bắt đầu luyện viết', icon: Icons.edit_outlined, bg: C.green, onTap: () => _startQuiz(s)),
+          ),
+        ]);
+      case _Phase.writing:
+        return Row(children: [
+          Expanded(
+            child: Btn.outline(
+              'Xoá & viết lại',
+              icon: Icons.backspace_outlined,
+              fg: C.ink700,
+              fontSize: 12,
+              padding: small,
+              onTap: () => _startQuiz(s),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Btn(
+              'Gợi ý nét',
+              icon: Icons.lightbulb_outline,
+              bg: C.amberBg,
+              fg: C.amberText,
+              fontSize: 12,
+              padding: small,
+              onTap: _writer.hint,
+            ),
+          ),
+        ]);
+      case _Phase.done:
+        return Row(children: [
+          Expanded(
+            flex: 2,
+            child: Btn.outline('Luyện lại', icon: Icons.replay, fontSize: 12, padding: small, onTap: () => _startQuiz(s)),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            flex: 3,
+            child: Btn('Chữ tiếp theo →', bg: C.green, onTap: s.nextWritingChar),
+          ),
+        ]);
+    }
+  }
+}
+
+/// Dòng trạng thái phía trên khung viết.
+class _StatusLine extends StatelessWidget {
+  const _StatusLine({required this.phase, required this.mistakes, required this.done, required this.total});
+  final _Phase phase;
+  final int mistakes;
+  final int done;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final (IconData icon, Color color, String title, String sub) = switch (phase) {
+      _Phase.idle => (Icons.visibility_outlined, C.primary, 'Sẵn sàng', 'Xem mẫu thứ tự nét, rồi bắt đầu viết.'),
+      _Phase.writing => (
+          Icons.edit_outlined,
+          C.amberText,
+          'Đang viết · nét ${done < total ? done + 1 : total}/$total',
+          mistakes == 0 ? 'Chưa sai nét nào' : 'Số lần sai: $mistakes',
+        ),
+      _Phase.done => (
+          Icons.check_circle_outline,
+          C.green,
+          'Hoàn thành!',
+          mistakes == 0 ? 'Không sai nét nào — rất tốt!' : 'Tổng số lần sai: $mistakes',
+        ),
+    };
+    return Row(children: [
+      Icon(icon, size: 22, color: color),
+      const SizedBox(width: 10),
+      Expanded(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, style: ts(13, w: w700, c: color)),
+          Text(sub, style: ts(11, c: C.ink500)),
+        ]),
+      ),
+    ]);
   }
 }
 
