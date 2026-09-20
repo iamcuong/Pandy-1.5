@@ -826,6 +826,25 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Chữ tiếp theo để luyện viết: lấy chữ kế tiếp trong danh sách chứa chữ hiện tại
+  /// (kết quả tìm kiếm → Từ cá nhân → Bộ thủ → 3000 từ).
+  void nextWritingChar() {
+    final lists = <List<String>>[
+      [for (final d in writingResults) d.word],
+      [for (final n in notebookSingleChars) n.char],
+      [for (final r in radicals) r.char],
+      [for (final v in vocab) if (v.char.runes.length == 1) v.char],
+    ];
+    for (final list in lists) {
+      final i = list.indexOf(writingChar);
+      if (i >= 0 && list.length > 1) {
+        setWritingChar(list[(i + 1) % list.length]);
+        return;
+      }
+    }
+    if (radicals.isNotEmpty) setWritingChar(radicals.first.char);
+  }
+
   /// Chữ đơn trong Sổ từ vựng — nguồn thứ hai để chọn chữ tập viết.
   List<NotebookEntry> get notebookSingleChars =>
       notebook.where((n) => n.char.runes.length == 1).toList();
